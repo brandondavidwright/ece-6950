@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<EDIT appVersion="Waveform 12.5.5" projectID="24e2de/3d04fd3" creationTime="1690048416643"
+      lastSignificantChange="1897f1c7903" modifiedBy="Brandon Wright">
+  <TRANSPORT endToEnd="1" position="0.0" scrubInterval="0.7399999999999993"/>
+  <MACROPARAMETERS id="1001"/>
+  <PITCHSEQUENCE>
+    <PITCH startBeat="0.0" pitch="60"/>
+  </PITCHSEQUENCE>
+  <TEMPOSEQUENCE>
+    <TEMPO startBeat="0.0" bpm="120.0" curve="1.0"/>
+    <TIMESIG numerator="4" denominator="4" startBeat="0.0"/>
+  </TEMPOSEQUENCE>
+  <VIDEO/>
+  <AUTOMAPXML/>
+  <CLICKTRACK level="0.6000000238418579"/>
+  <ID3VORBISMETADATA trackNumber="1" date="2023"/>
+  <MASTERVOLUME>
+    <PLUGIN type="volume" volume="0.6376281380653381" id="1002" enabled="1">
+      <MACROPARAMETERS id="1003"/>
+      <MODIFIERASSIGNMENTS/>
+    </PLUGIN>
+  </MASTERVOLUME>
+  <RACKS/>
+  <MASTERPLUGINS/>
+  <AUXBUSNAMES/>
+  <INPUTDEVICES>
+    <INPUTDEVICE name="Virtual">
+      <INPUTDEVICEDESTINATION targetTrack="1012" targetIndex="0" armed="1"/>
+    </INPUTDEVICE>
+    <INPUTDEVICE name="Input 1"/>
+    <INPUTDEVICE name="Input 2"/>
+  </INPUTDEVICES>
+  <TRACKCOMPS/>
+  <ARADOCUMENT/>
+  <CONTROLLERMAPPINGS/>
+  <VIEWSTATE minimalTransportBar="1" hiddenClips="" lockedClips="" chordTrackVisible="0"
+             arrangerTrackVisible="0" enabledTrackTags="" currentSidePanel="Search"
+             viewleft="-0.9694323144104794" viewright="36.03056768558948"/>
+  <EDITMIXGROUPS/>
+  <AUDIOEDITING/>
+  <ARRANGERTRACK name="Arranger" id="1054">
+    <MACROPARAMETERS id="1055"/>
+    <MODIFIERS/>
+  </ARRANGERTRACK>
+  <CHORDTRACK name="Chord" id="1058">
+    <MACROPARAMETERS id="1059"/>
+    <MODIFIERS/>
+  </CHORDTRACK>
+  <MARKERTRACK id="1004" name="Marker">
+    <MACROPARAMETERS id="1005"/>
+    <MODIFIERS/>
+  </MARKERTRACK>
+  <TEMPOTRACK name="Global" id="1056">
+    <MACROPARAMETERS id="1057"/>
+    <MODIFIERS/>
+  </TEMPOTRACK>
+  <MASTERTRACK name="Master" id="1060">
+    <MACROPARAMETERS id="1061"/>
+    <MODIFIERS/>
+  </MASTERTRACK>
+  <TRACK id="1006" midiVProp="0.28125" midiVOffset="0.359375" colour="ffff0000">
+    <MACROPARAMETERS id="1007"/>
+    <MODIFIERS/>
+    <AUDIOCLIP name="Track 1 Recording 1" start="0.0" length="19.73002083333333"
+               offset="0.0" id="1063" source="24e2de/b4d5dc" sync="0" elastiqueMode="0"
+               pan="0.0" colour="ffff0000" proxyAllowed="1" resamplingQuality="lagrange">
+      <LOOPINFO rootNote="-1" numBeats="39.46004166666667" oneShot="0" denominator="4"
+                numerator="4" bpm="0.0" inMarker="0" outMarker="-1"/>
+    </AUDIOCLIP>
+    <AUDIOCLIP name="Track 1 Recording 2" start="0.0" length="24.71002083333333"
+               offset="0.0" id="1065" source="24e2de/122f36c" sync="0" elastiqueMode="0"
+               pan="0.0" colour="ffff0000" proxyAllowed="1" resamplingQuality="lagrange">
+      <LOOPINFO rootNote="-1" numBeats="49.42004166666667" oneShot="0" denominator="4"
+                numerator="4" bpm="0.0" inMarker="0" outMarker="-1"/>
+    </AUDIOCLIP>
+    <PLUGIN type="volume" id="1008" enabled="1">
+      <MACROPARAMETERS id="1009"/>
+      <MODIFIERASSIGNMENTS/>
+    </PLUGIN>
+    <PLUGIN type="level" id="1010" enabled="1">
+      <MACROPARAMETERS id="1011"/>
+      <MODIFIERASSIGNMENTS/>
+    </PLUGIN>
+    <OUTPUTDEVICES>
+      <DEVICE name="(default audio output)"/>
+    </OUTPUTDEVICES>
+  </TRACK>
+  <TRACK id="1012" midiVProp="0.28125" midiVOffset="0.359375" colour="ffffaa00">
+    <MACROPARAMETERS id="1013"/>
+    <MODIFIERS/>
+    <PLUGIN type="volume" id="1014" enabled="1">
+      <MACROPARAMETERS id="1015"/>
+      <MODIFIERASSIGNMENTS/>
+    </PLUGIN>
+    <PLUGIN type="level" id="1016" enabled="1">
+      <MACROPARAMETERS id="1017"/>
+      <MODIFIERASSIGNMENTS/>
+    </PLUGIN>
+    <OUTPUTDEVICES>
+      <DEVICE name="(default audio output)"/>
+    </OUTPUTDEVICES>
+  </TRACK>
+  <TRACK id="1018" midiVProp="0.28125" midiVOffset="0.359375" colour="ffaaff00">
+    <MACROPARAMETERS id="1019"/>
+    <MODIFIERS/>
+    <PLUGIN type="volume" id="1020" enabled="1">
+      <MACROPARAMETERS id="1021"/>
+      <MODIFIERASSIGNMENTS/>
+    </PLUGIN>
+    <PLUGIN type="level" id="1022" enabled="1">
+      <MACROPARAMETERS id="1023"/>
+      <MODIFIERASSIGNMENTS/>
+    </PLUGIN>
+    <OUTPUTDEVICES>
+      <DEVICE name="(default audio output)"/>
+    </OUTPUTDEVICES>
+  </TRACK>
+  <TRACK id="1024" midiVProp="0.28125" midiVOffset="0.359375" colour="ff00ff00">
+    <MACROPARAMETERS id="1025"/>
+    <MODIFIERS/>
+    <PLUGIN type="volume" id="1026" enabled="1">
+      <MACROPARAMETERS id="1027"/>
+      <MODIFIERASSIGNMENTS/>
+    </PLUGIN>
+    <PLUGIN type="level" id="1028" enabled="1">
+      <MACROPARAMETERS id="1029"/>
+      <MODIFIERASSIGNMENTS/>
+    </PLUGIN>
+    <OUTPUTDEVICES>
+      <DEVICE name="(default audio output)"/>
+    </OUTPUTDEVICES>
+  </TRACK>
+  <TRACK id="1030" midiVProp="0.28125" midiVOffset="0.359375" colour="ff00ffaa">
+    <MACROPARAMETERS id="1031"/>
+    <MODIFIERS/>
+    <PLUGIN type="volume" id="1032" enabled="1">
+      <MACROPARAMETERS id="1033"/>
+      <MODIFIERASSIGNMENTS/>
+    </PLUGIN>
+    <PLUGIN type="level" id="1034" enabled="1">
+      <MACROPARAMETERS id="1035"/>
+      <MODIFIERASSIGNMENTS/>
+    </PLUGIN>
+    <OUTPUTDEVICES>
+      <DEVICE name="(default audio output)"/>
+    </OUTPUTDEVICES>
+  </TRACK>
+  <TRACK id="1036" midiVProp="0.28125" midiVOffset="0.359375" colour="ff00aaff">
+    <MACROPARAMETERS id="1037"/>
+    <MODIFIERS/>
+    <PLUGIN type="volume" id="1038" enabled="1">
+      <MACROPARAMETERS id="1039"/>
+      <MODIFIERASSIGNMENTS/>
+    </PLUGIN>
+    <PLUGIN type="level" id="1040" enabled="1">
+      <MACROPARAMETERS id="1041"/>
+      <MODIFIERASSIGNMENTS/>
+    </PLUGIN>
+    <OUTPUTDEVICES>
+      <DEVICE name="(default audio output)"/>
+    </OUTPUTDEVICES>
+  </TRACK>
+  <TRACK id="1042" midiVProp="0.28125" midiVOffset="0.359375" colour="ff0000ff">
+    <MACROPARAMETERS id="1043"/>
+    <MODIFIERS/>
+    <PLUGIN type="volume" id="1044" enabled="1">
+      <MACROPARAMETERS id="1045"/>
+      <MODIFIERASSIGNMENTS/>
+    </PLUGIN>
+    <PLUGIN type="level" id="1046" enabled="1">
+      <MACROPARAMETERS id="1047"/>
+      <MODIFIERASSIGNMENTS/>
+    </PLUGIN>
+    <OUTPUTDEVICES>
+      <DEVICE name="(default audio output)"/>
+    </OUTPUTDEVICES>
+  </TRACK>
+  <TRACK id="1048" midiVProp="0.28125" midiVOffset="0.359375" colour="ffaa00ff">
+    <MACROPARAMETERS id="1049"/>
+    <MODIFIERS/>
+    <PLUGIN type="volume" id="1050" enabled="1">
+      <MACROPARAMETERS id="1051"/>
+      <MODIFIERASSIGNMENTS/>
+    </PLUGIN>
+    <PLUGIN type="level" id="1052" enabled="1">
+      <MACROPARAMETERS id="1053"/>
+      <MODIFIERASSIGNMENTS/>
+    </PLUGIN>
+    <OUTPUTDEVICES>
+      <DEVICE name="(default audio output)"/>
+    </OUTPUTDEVICES>
+  </TRACK>
+</EDIT>
