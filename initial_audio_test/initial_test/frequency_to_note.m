@@ -48,8 +48,8 @@ function midi_m = create_midi(notes, fs)
         note = midi_notes(i)
         l = note_lengths(i)
         index = change_indeces(i)
-        time = t(change_indeces(i))
-        midi_m(i, :) = midimsg("Note", 1, midi_notes(i), 100, note_lengths(i), t(change_indeces(i) - t(change_indeces(i - 1))));
+        time = t(change_indeces(i-1))
+        midi_m(i, :) = midimsg("Note", 1, floor(midi_notes(i)), 100, note_lengths(i), t(change_indeces(i-1)));
     end
 
     % midi_m = msgs;
