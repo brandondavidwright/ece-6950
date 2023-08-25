@@ -1,15 +1,17 @@
 clear;
 close all;
-Fs = 1000; 
+
+
+filename = "sample.wav";
+[recording, Fs] = audioread(filename);
+sound(recording, Fs)
 tFinal = 15;
 t = 1/Fs:1/Fs:tFinal;
 tt = t.';
 % input = 100*sin(2*pi*440*t); 
 
-filename = "sample.wav";
-recording = audioread(filename);
 figure
-plot(tt, recording);
+plot(recording);
 
 % f0 = pitch(recording, Fs)
 f0 = pitchnn(recording, Fs);
@@ -58,7 +60,7 @@ midi_messages = create_midi(notes, Fs)';
 availableDevices = mididevinfo;
 device = mididevice(availableDevices.output(2).ID);
 
-midisend(device, midi_messages);
+%midisend(device, midi_messages);
 
 % input = [tt(:), recording(:)];
 
