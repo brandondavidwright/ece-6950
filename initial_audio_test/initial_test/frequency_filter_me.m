@@ -1,6 +1,6 @@
 clear;
 close all;
-Fs = 1e4;
+Fs = 1000; 
 tFinal = 15;
 t = 1/Fs:1/Fs:tFinal;
 tt = t.';
@@ -43,10 +43,15 @@ f02 = interp1(1:n1, f0, linspace(1, n1, n2), 'nearest');
 
 notes = freq_to_note(f02);
 
-% soundsc(recording, Fs);
+%notes(notes ~= 18 & notes ~= 23 & notes ~= 28 & notes ~= 33 & notes ~= 37 & notes ~= 42) = NaN;
+
+%soundsc(recording, Fs);
 
 figure
-plot(notes);
+plot(tt, notes);
+
+%notes = [NaN 25 25 25 25 25 NaN 18 NaN 18 NaN 27 27 27 27 NaN 27 27 29 29 30 30 30 30 30 30 30 30 30];
+%midi_messages = create_midi(notes, 2)';
 
 midi_messages = create_midi(notes, Fs)';
 
@@ -54,11 +59,6 @@ availableDevices = mididevinfo;
 device = mididevice(availableDevices.output(2).ID);
 
 midisend(device, midi_messages);
-
-% plot(t, d);
-gw = .5; kf = .5; gphi = .5; gm = .5;
-
-
 
 % input = [tt(:), recording(:)];
 
@@ -75,29 +75,29 @@ function note = freq_to_note(f)
 end
 
 function midi_m = create_midi(notes, fs) 
-    notes(isnan(notes))=0;
-
 % detect change
+    notes(isnan(notes))=0;    
     pitch_change = diff(notes) ~= 0;
 
-
+    
 
     % find indeces where note changes
     change_indeces = find(pitch_change);
-    change_indeces(length(change_indeces)) = length(notes);
+    change_indeces = [change_indeces length(notes)];
+    % change_indeces(length(change_indeces)) = length(notes);
 
     % midi_notes = zeros(1, length(change_indeces));
     % note_lengths = zeros(1, length(change_indeces));
 
     % create variables with midi note and length
     for i = 1:length(change_indeces)
-        midi_notes(i) = notes(change_indeces(i));
-        if i == 1 
-            note_lengths(i) = change_indeces(i);
-        else 
+        if i == 1
+            note_lengths(i) = change_indeces(i)
+        else
+            midi_notes(i) = notes(change_indeces(i)); 
             note_lengths(i) = change_indeces(i) - change_indeces(i-1);
         end
-    end
+    end 
 
     midi_notes;
     note_lengths;
@@ -107,28 +107,28 @@ function midi_m = create_midi(notes, fs)
     % msgs = [midimsg("Note", 1, midi_notes(1), 100, note_lengths(1), t(change_indeces(1)))]';
     
     
-        note = midi_notes(1);
-        if note == 0
-            volume = 0;
-        else
-            volume = 100;
-        end
+    note = midi_notes(1);
+    if note == 0
+        volume = 0;
+    else
+        volume = 100;
+    end
 
-    midi_m(i, :) = midimsg("Note", 1, note, volume, note_lengths(1), t(change_indeces(1)));
+    midi_m(i, :) = midimsg("Note", 1, note, volume, note_lengths(1), t(1));
 
     for i = 2: length(midi_notes)
         note = midi_notes(i);
-        note(isnan(note))=0; 
         if note == 0
             volume = 0;
         else
             volume = 60;
         end
-        l = fs*note_lengths(i);
-        index = change_indeces(i);
         note_length = note_lengths(i);
-        time = t(change_indeces(i))
-        midi_m(i, :) = midimsg("Note", 1, note, volume, note_length, time);
+        timestamp = t(change_indeces(i-1)+1);
+        disp(note_length)
+        disp(note)        
+        disp(timestamp)
+        midi_m(i, :) = midimsg("Note", 1, note, volume, note_length/fs, timestamp);
     end
 
     % midi_m = msgs;
