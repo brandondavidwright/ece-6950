@@ -1,4 +1,4 @@
-clear;
+ clear;
 close all;
 
 
@@ -101,14 +101,15 @@ function midi_m = create_midi(notes, fs, recording)
             note_peaks(i) = max(pressure_levels(i:change_indeces(i)));         
             note_lengths(i) = change_indeces(i);
         elseif i == length(change_indeces)
-            note_peaks(i) = pressure_levels(change_indeces(i):length(pressure_levels));
+            note_peaks(i) = pressure_levels(i);
             midi_notes(i) = notes(change_indeces(i)); 
             note_lengths(i) = change_indeces(i) - change_indeces(i-1);
         else
             midi_notes(i) = notes(change_indeces(i)); 
             note_lengths(i) = change_indeces(i) - change_indeces(i-1);
-            max(findpeaks(pressure_levels(change_indeces(i):change_indeces(i+1))));
-            note_peaks(i) = max(pressure_levels(change_indeces(i):change_indeces(i+1)));
+            peak = max(findpeaks(pressure_levels(change_indeces(i-1):change_indeces(i))));
+            if(isempty(peak)); peak = 0; end
+            note_peaks(i) = peak;
         end
     end
 
