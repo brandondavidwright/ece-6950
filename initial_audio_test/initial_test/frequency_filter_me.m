@@ -12,7 +12,7 @@ tt = t.';
 
 figure
 plot(recording);
-
+  
 % f0 = pitch(recording, Fs)
 f0 = pitchnn(recording, Fs);
 
@@ -146,7 +146,6 @@ function midi_m = create_midi(notes, fs, recording)
 end
 
 function volume = find_volume(note_peak)
-    note_peak
     volume = floor(127*note_peak/100);
 end
     
