@@ -13,4 +13,3 @@ sigsound = getaudiodata(recObj);
 plot(sigsound);
 filename = "sample.wav";
 audiowrite(filename, sigsound, Fs);
-
