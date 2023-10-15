@@ -74,50 +74,76 @@ clear; close all;
 %% I/O streaming 
 % Closing the loop between input and output only requires writing to an
 % audio output device at the end of the loop
-In = audioDeviceReader %#ok<NOPTS>
+% In = audioDeviceReader %#ok<NOPTS>
 
 filename = "sample.wav";
 
-File = dsp.AudioFileReader('sample.wav');
+% File = dsp.AudioFileReader('sample.wav');
+% Fs = File.SampleRate;
+
+deviceReader = audioDeviceReader(1000);
+release(deviceReader);
+setup(deviceReader);
+
+Fs = deviceReader.SampleRate;
+
+
 availableDevices = mididevinfo;
 device = mididevice(availableDevices.output(2).ID);
-Fs = File.SampleRate;
 sampleBuffer = zeros(1);
 noteRegister = 0;
 previousToc = 0;
 tic
-while toc < File.
+while toc < 15
     % Read one block
-    x = step(File);
+    mySignal = deviceReader();
+    % sample = step(File);
+    disp(mySignal.step)
+    sample = step(mySignal.step);
     % note = pitchnn(x, Fs);
-    sampleBuffer = cat(1,sampleBuffer,x);
-    if toc - previousToc >= 0.07
-        f = pitchnn(sampleBuffer, Fs);
-        note = max(freq_to_note(f)) % fix this
-        if(note ~= noteRegister) 
-            midi_messages = midimsg("NoteOn", 1, note, 100, toc);
-            midisend(device, midi_messages);
-        end        
-        previousToc = toc;
-        noteRegister = note;
-    end
+    % sampleBuffer = cat(1,sampleBuffer,x);
+    bufferSize = length(sample)./Fs
+    % if toc - previousToc >= 0.07
+        f0 = pitchnn(sample, Fs);
+
+        n1 = numel(f0);
+        n2 = length(sample);
+        f02 = interp1(1:n1, f0, linspace(1, n1, n2), 'nearest');
+        % length(f)
+        notes = freq_to_note(f02);
+
+        midi_m = create_midi(notes, Fs, sample);
+        midisend(device, midi_m);
+        % toc
+        % note = max(notes) % fix this
+        % if(note ~= noteRegister)
+        %     midi_message = midimsg("NoteOff", 1, note, 100, toc);
+        %     midisend(device, midi_message);
+        %     midi_message = midimsg("NoteOn", 1, note, 100, toc);
+        %     midisend(device, midi_message);
+        % end
+        % sampleBuffer = zeros(1);
+        % previousToc = toc
+        % noteRegister = note
+    % end
+
+
    
-    sampleBuffer = 0;
     % *** Your processing code goes HERE: ***
     
 
     % midi_messages = midimsg("Note", 1, note, volume(i), note_length/fs, timestamp);
-
-    y = x;
     
     % % Write block to output
     % step(Out,y);
    
     % Plot it
-    plot(x)
+    plot(sample)
     drawnow
     disp(toc)
 end
+
+release(File);
 
 %% Packaging audio processing algorithms for execution efficiency
 %% Back to audio streaming basics
