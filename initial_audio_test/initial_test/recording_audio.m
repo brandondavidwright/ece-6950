@@ -1,7 +1,7 @@
 clear;
 close all;
 recDuration = 15;
-Fs = 1000;
+Fs = 44100;
 nBits = 16;
 nChannels = 1;
 recObj = audiorecorder(Fs, nBits, nChannels);

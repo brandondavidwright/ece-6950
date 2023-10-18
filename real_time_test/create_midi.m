@@ -1,14 +1,23 @@
-function midi_m = create_midi(notes, fs, recording) 
+function midi_m = create_midi(notes, Fs, recording, previousNote) 
     % detect change
-    notes(isnan(notes))=0;    
+    notes(isnan(notes))=0;
+    previousNote(isnan(previousNote)) = 0;
     pitch_change = diff(notes) ~= 0;
 
-    SPL = splMeter("SampleRate", fs);
+    if previousNote == notes(1)
+        pitch_change(1,1) = 0; 
+    end
+
+    SPL = splMeter("SampleRate", Fs);
     pressure_levels = SPL(recording);
 
     % find indeces where note changes
     change_indeces = find(pitch_change);
     change_indeces = [change_indeces length(notes)];
+
+    note_peaks = zeros(1);
+    midi_notes = zeros(1);
+    note_lengths = zeros(1);
 
     % create variables with midi note and length
     for i = 1:length(change_indeces)
@@ -30,16 +39,17 @@ function midi_m = create_midi(notes, fs, recording)
 
     note_peaks(note_peaks<0) = 0;
 
-    t = 0:1/fs:length(notes)/fs;
+    t = 0:1/Fs:length(notes)/Fs;
     
     note = midi_notes(1);
     if note == 0
         volume(1) = 0;
     else
         volume(1) = find_volume(note_peaks(1));
+        %volume(1) = 100;
     end
 
-    midi_m(i, :) = midimsg("Note", 1, note, volume, note_lengths(1), t(1));
+    midi_m(i, :) = midimsg("Note", 1, note, volume(1), note_lengths(1), t(1)); %TODO change
 
     for i = 2: length(midi_notes)
         note = midi_notes(i);
@@ -47,9 +57,10 @@ function midi_m = create_midi(notes, fs, recording)
             volume(i) = 0;
         else
             volume(i) = find_volume(note_peaks(i));
+            %volume(i) = 100;
         end
         note_length = note_lengths(i);
         timestamp = t(change_indeces(i-1)+1);
-        midi_m(i, :) = midimsg("Note", 1, note, volume(i), note_length/fs, timestamp);
+        midi_m(i, :) = midimsg("Note", 1, note, volume(i), note_length/Fs, timestamp); %TODO change
     end
 end
