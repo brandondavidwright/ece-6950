@@ -5,7 +5,7 @@ function midi_m = create_midi(notes, Fs, recording, previousNote)
     pitch_change = diff(notes) ~= 0;
 
     if previousNote == notes(1)
-        %pitch_change(1,1) = 0;
+        pitch_change(1,1) = 0;
 
     end
 
@@ -63,8 +63,7 @@ function midi_m = create_midi(notes, Fs, recording, previousNote)
         %     volume(i) = find_volume(note_peaks(i));
         %     %volume(i) = 100;
         end
-        % midi_m = midimsg("NoteOn", 1, note, volume, t(1)); %TODO change
-        midi_m = zeros(1);
+        midi_m = midimsg("NoteOn", 1, note, volume, t(1)); %TODO change
     end
 
 
