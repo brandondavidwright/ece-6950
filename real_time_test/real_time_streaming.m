@@ -38,7 +38,7 @@ while 1
         notes = freq_to_note(f02);
         noteBuffer = cat(2, noteBuffer, notes);
         midi_m = create_midi(notes, fs, sampleBuffer, previousNote)
-        previousNote = notes(end)
+        previousNote = notes(end);
         midisend(device, midi_m(:,1));
         %fileWriter(sample);
         sampleBuffer = zeros(1);

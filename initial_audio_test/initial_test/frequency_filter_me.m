@@ -61,7 +61,7 @@ function midi_m = create_midi(notes, fs, recording)
             note_peaks(i) = pressure_levels(i);
             midi_notes(i) = notes(change_indeces(i)); 
             note_lengths(i) = change_indeces(i) - change_indeces(i-1);
-        else
+        else 
             midi_notes(i) = notes(change_indeces(i)); 
             note_lengths(i) = change_indeces(i) - change_indeces(i-1);
             peak = max(findpeaks(pressure_levels(change_indeces(i-1):change_indeces(i))));
