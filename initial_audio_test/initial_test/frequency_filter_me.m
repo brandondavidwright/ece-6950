@@ -3,7 +3,7 @@ close all;
 
 filename = "sample.wav";
 [recording, Fs] = audioread(filename);
-sound(recording, Fs)
+% sound(recording, Fs)
 
 tFinal = 15;
 t = 1/Fs:1/Fs:tFinal;
@@ -29,7 +29,9 @@ plot(tt, notes);
 midi_messages = create_midi(notes, Fs, recording)';
 
 availableDevices = mididevinfo;
-device = mididevice(availableDevices.output(2).ID);
+% device = mididevice(availableDevices.output(2).ID);
+device = mididevice(availableDevices.output(4).ID);
+
 
 midisend(device, midi_messages);
 

@@ -23,7 +23,7 @@ noteBuffer = [0];
 tic
 while 1 
     sample = deviceReader(); %N=1024
-    % sample = step(File);
+    %sample = step(File);
     sampleBuffer = cat(1, sampleBuffer, sample);
     if length(sampleBuffer)/Fs > 0.07
         % disp(acquiredAudio);

@@ -71,7 +71,7 @@ function midi_m = create_midi(notes, Fs, recording, previousNote)
         end
         note_length = note_lengths(i)
         timestamp = t(change_indeces(i-1)+1)
-        % midi_m(i, :) = midimsg("Note", 1, note, volume(i), note_length/Fs, timestamp); %TODO change
+        % midi_m(i, :) = midimsg(v   "Note", 1, note, volume(i), note_length/Fs, timestamp); %TODO change
         midi_m = cat(1, midi_m, midimsg("NoteOff", 1, midi_notes(i-1), volume(i), timestamp)); %TODO change
         midi_m = cat(1, midi_m, midimsg("NoteOn", 1, note, volume(i), timestamp)); %TODO change
     end
