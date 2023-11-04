@@ -10,7 +10,10 @@ t = 1/Fs:1/Fs:tFinal;
 tt = t.';
 
 figure
-plot(recording);
+plot(tt, recording)
+xlabel("Time (s)")
+ylabel("Amplitude")
+title("Wave file of sound recording")
 
 f0 = pitchnn(recording, Fs);
 
@@ -19,12 +22,18 @@ n2 = length(recording);
 f02 = interp1(1:n1, f0, linspace(1, n1, n2), 'nearest');
 
 figure
-plot(f02)
+plot(tt, f02)
+xlabel("Time (s)")
+ylabel("f_0 (Hz)")
+title("Fundamental frequency f_0 of recording")
 
 notes = freq_to_note(f02);
 
 figure
 plot(tt, notes);
+xlabel("Time (s)")
+ylabel("Key (A440)")
+title("Keys of recording")
 
 midi_messages = create_midi(notes, Fs, recording)';
 
@@ -39,7 +48,10 @@ function note = freq_to_note(f)
     note = floor(12*log2(f./440) + 49);
 end
 
-function midi_m = create_midi(notes, fs, recording) 
+function midi_m = create_midi(notes, fs, recording)
+    tFinal = 15;
+    t = 1/fs:1/fs:tFinal;
+    tt = t.';
     % detect change
     notes(isnan(notes))=0;    
     pitch_change = diff(notes) ~= 0;
@@ -48,7 +60,10 @@ function midi_m = create_midi(notes, fs, recording)
     pressure_levels = SPL(recording);
 
     figure
-    plot(pressure_levels);
+    plot(tt, pressure_levels);
+    xlabel("time (s)")
+    ylabel("Sound pressue (dB)")
+    title("Sound pressue of recording")
 
     % find indeces where note changes
     change_indeces = find(pitch_change);
