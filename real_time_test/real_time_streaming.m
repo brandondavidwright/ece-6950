@@ -9,7 +9,7 @@ Fs = deviceReader.SampleRate;
 
 
 availableDevices = mididevinfo;
-device = mididevice(availableDevices.output(2).ID);
+device = mididevice(availableDevices.output(3).ID);
 
 % filename = "myTestAudio.wav";
 % 
