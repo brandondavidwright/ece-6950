@@ -1,0 +1,13 @@
+close;
+f1 = 440;
+f2 = 880;
+fs = 11025;
+t = 0:1/fs:0.05;
+
+x = cos(2*pi*f1*t);
+y = cos(2*pi*f2*t);
+
+plot(t, x, t, y)
+title("Two frequencies one octave apart")
+xlabel("Time (s)")
+legend("A_4 (440 Hz)", "A_5 (880 Hz)")
