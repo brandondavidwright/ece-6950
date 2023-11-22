@@ -1,28 +1,43 @@
 function midi_m = create_midi(recording, Fs)
-    %find fundamental frequency with respect to time
+% CREATE_MIDI  Creates MIDI messages from audio recording.  <---- H1 line
+%   M = CREATE_MIDI(RECORDING, FS) creates MIDI messages from RECORDING for
+%   sampling frequency FS
+%   
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%  Determine fundamental frequencies of recording                  %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     f0 = pitchnn(recording, Fs);
-    
-    %adjust length of frequencies to same length as recording
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%  Adjust frequency array to be same length as recording           %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     n1 = numel(f0);
     n2 = length(recording);
     f02 = interp1(1:n1, f0, linspace(1, n1, n2), 'nearest');
     
-    %find keyboard notes for frequencies
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%  Find musical notes from frequencies                            %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     notes = freq_to_note(f02);
     
-    % detect change in notes
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%  Detect indeces where musical notes change                       %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     notes(isnan(notes))=0;    
     pitch_change = diff(notes) ~= 0;
-
-    % find volume
-    SPL = splMeter("SampleRate", Fs);
-    pressure_levels = SPL(recording);
-
-    % find indeces where note changes
     change_indeces = find(pitch_change);
     change_indeces = [change_indeces length(notes)];
 
-    % create variables with midi note and length
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%  Find volumes of recording                                       %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    SPL = splMeter("SampleRate", Fs);
+    pressure_levels = SPL(recording);
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%  Find peak volume, note length, and musical notes                %
+%   in between note changes                                        %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     for i = 1:length(change_indeces)
         if i == 1
             note_peaks(i) = max(pressure_levels(i:change_indeces(i)));         
@@ -39,13 +54,19 @@ function midi_m = create_midi(recording, Fs)
             note_peaks(i) = peak;
         end
     end
-
-    %set sound pressure minimum value to 0
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%  Remove negative sound pressures                                 %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     note_peaks(note_peaks<0) = 0;
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%  Create time array for timestamps                                %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     t = 0:1/Fs:length(notes)/Fs;
     
-    %find midi notes
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%  Create MIDI messages                                            %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     note = midi_notes(1);
     if note == 0
         volume(1) = 0;
