@@ -12,28 +12,28 @@ function midi_m = create_midi(notes, Fs, recording, previousNote)
     SPL = splMeter("SampleRate", Fs);
     pressure_levels = SPL(recording);
 
-    % find indeces where note changes
-    change_indeces = find(pitch_change);
-    change_indeces = [change_indeces length(notes)];
+    % find indices where note changes
+    change_indices = find(pitch_change);
+    change_indices = [change_indices length(notes)];
 
     note_peaks = zeros(1);
     midi_notes = zeros(1);
     note_lengths = zeros(1);
 
     % create variables with midi note and length
-    for i = 1:length(change_indeces)
+    for i = 1:length(change_indices)
         if i == 1
-            note_peaks(i) = max(pressure_levels(i:change_indeces(i)));   
-            midi_notes(i) = notes(change_indeces(i)); 
-            note_lengths(i) = change_indeces(i);
-        elseif i == length(change_indeces)
+            note_peaks(i) = max(pressure_levels(i:change_indices(i)));   
+            midi_notes(i) = notes(change_indices(i)); 
+            note_lengths(i) = change_indices(i);
+        elseif i == length(change_indices)
             note_peaks(i) = pressure_levels(i);
-            midi_notes(i) = notes(change_indeces(i)); 
-            note_lengths(i) = change_indeces(i) - change_indeces(i-1);
+            midi_notes(i) = notes(change_indices(i)); 
+            note_lengths(i) = change_indices(i) - change_indices(i-1);
         else
-            midi_notes(i) = notes(change_indeces(i)); 
-            note_lengths(i) = change_indeces(i) - change_indeces(i-1);
-            peak = max(findpeaks(pressure_levels(change_indeces(i-1):change_indeces(i))));
+            midi_notes(i) = notes(change_indices(i)); 
+            note_lengths(i) = change_indices(i) - change_indices(i-1);
+            peak = max(findpeaks(pressure_levels(change_indices(i-1):change_indices(i))));
             if(isempty(peak)); peak = 0; end
             note_peaks(i) = peak;
         end
@@ -70,7 +70,7 @@ function midi_m = create_midi(notes, Fs, recording, previousNote)
             volume(i) = find_volume(note_peaks(i));
         end
         note_length = note_lengths(i)
-        timestamp = t(change_indeces(i-1)+1)
+        timestamp = t(change_indices(i-1)+1)
         % midi_m(i, :) = midimsg(v   "Note", 1, note, volume(i), note_length/Fs, timestamp); %TODO change
         midi_m = cat(1, midi_m, midimsg("NoteOff", 1, midi_notes(i-1), volume(i), timestamp)); %TODO change
         midi_m = cat(1, midi_m, midimsg("NoteOn", 1, note, volume(i), timestamp)); %TODO change

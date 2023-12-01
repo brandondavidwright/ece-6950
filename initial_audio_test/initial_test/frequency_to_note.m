@@ -19,19 +19,19 @@ function midi_m = create_midi(notes, fs)
     % detect change
     pitch_change = diff(notes) ~= 0
 
-    % find indeces where note changes
-    change_indeces = [find(pitch_change) length(notes)]
+    % find indices where note changes
+    change_indices = [find(pitch_change) length(notes)]
 
-    % midi_notes = zeros(1, length(change_indeces));
-    % note_lengths = zeros(1, length(change_indeces));
+    % midi_notes = zeros(1, length(change_indices));
+    % note_lengths = zeros(1, length(change_indices));
 
     % create variables with midi note and length
-    for i = 1:length(change_indeces)
-        midi_notes(i) = notes(change_indeces(i));
+    for i = 1:length(change_indices)
+        midi_notes(i) = notes(change_indices(i));
         if i == 1 
-            note_lengths(i) = change_indeces(i);
+            note_lengths(i) = change_indices(i);
         else 
-            note_lengths(i) = change_indeces(i) - change_indeces(i-1);
+            note_lengths(i) = change_indices(i) - change_indices(i-1);
         end
     end
 
@@ -40,16 +40,16 @@ function midi_m = create_midi(notes, fs)
 
     t = 0:1/fs:length(notes)/fs;
 
-    % msgs = [midimsg("Note", 1, midi_notes(1), 100, note_lengths(1), t(change_indeces(1)))]';
+    % msgs = [midimsg("Note", 1, midi_notes(1), 100, note_lengths(1), t(change_indices(1)))]';
 
     midi_m(i, :) = midimsg("Note", 1, midi_notes(1), 100, note_lengths(1), t(1));
 
     for i = 2: length(midi_notes)
         note = midi_notes(i)
         l = note_lengths(i)
-        index = change_indeces(i)
-        time = t(change_indeces(i-1))
-        midi_m(i, :) = midimsg("Note", 1, floor(midi_notes(i)), 100, note_lengths(i), t(change_indeces(i-1)));
+        index = change_indices(i)
+        time = t(change_indices(i-1))
+        midi_m(i, :) = midimsg("Note", 1, floor(midi_notes(i)), 100, note_lengths(i), t(change_indices(i-1)));
     end
 
     % midi_m = msgs;
